@@ -1,8 +1,10 @@
 from fastapi import FastAPI
-
 import uvicorn
 
 app = FastAPI()
 
 if __name__ == '__main__':
-    uvicorn.run("delivery-app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("delivery-app:app",
+                host=settings.run.host,
+                port=settings.run.port,
+                reload=True)
