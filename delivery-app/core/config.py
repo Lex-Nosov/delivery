@@ -12,6 +12,10 @@ class ApiPrefix(BaseModel):
     prefix: str = "/parcel"
 
 
+class SessionPrefix(BaseModel):
+    prefix: str = "/session"
+
+
 class DatabaseConfig(BaseModel):
     url: PostgresDsn
     echo: bool = False
@@ -29,6 +33,7 @@ class Settings(BaseSettings):
     )
     run: RunConfig = RunConfig()
     api_prefix: ApiPrefix = ApiPrefix()
+    session_prefix: SessionPrefix = SessionPrefix()
     db: DatabaseConfig
 
 
