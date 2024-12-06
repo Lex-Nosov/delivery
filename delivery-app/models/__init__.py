@@ -1,10 +1,5 @@
-__all__ = (
-    "db_helper",
-    "Base",
-    "Parcel",
-    "TypeParcel"
-)
+__all__ = ("db_helper", "Base", "Parcel", "ParcelType")
 
-from .db_helper import db_helper
+from core.db_helper import db_helper
 from .base import Base
-from .parcel import Parcel, TypeParcel
+from .parcel import Parcel, ParcelType

@@ -1,24 +1,25 @@
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from .base import Base
+from sqlalchemy import Column, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
+from uuid import uuid4
+
+from . import Base
+
+
+class ParcelType(Base):
+    __tablename__ = "parcel_types"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False, unique=True)
 
 
 class Parcel(Base):
     __tablename__ = "parcels"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)  # Добавляем первичный ключ
-    title: Mapped[str] = mapped_column()
-    weight: Mapped[float] = mapped_column()
-    amount: Mapped[float] = mapped_column()
-    type_id: Mapped[int] = mapped_column(ForeignKey("type_parcels.id"))  # Внешний ключ
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4, index=True)
+    title = Column(String, nullable=False)
+    weight = Column(Float, nullable=False)
+    content_value = Column(Float, nullable=False)
+    delivery_cost = Column(Float, nullable=True)
+    type_id = Column(Integer, ForeignKey("parcel_types.id"), nullable=False)
+    session_id = Column(String, nullable=False)
 
-    # Связь "многие к одному"
-    type: Mapped["TypeParcel"] = relationship("TypeParcel", back_populates="parcels")
-
-
-class TypeParcel(Base):
-    __tablename__ = "type_parcels"
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)  # Добавляем первичный ключ
-    title: Mapped[str] = mapped_column()
-
-    # Связь "один ко многим"
-    parcels: Mapped[list["Parcel"]] = relationship("Parcel", back_populates="type")
+    type = relationship("ParcelType")

@@ -11,12 +11,12 @@ from core.config import settings
 
 class DatabaseHelper:
     def __init__(
-            self,
-            url: str,
-            echo: bool = True,
-            echo_pool: int = 5,
-            pool_size: int = 10,
-            max_overflow: int = 10,
+        self,
+        url: str,
+        echo: bool = True,
+        echo_pool: int = 5,
+        pool_size: int = 10,
+        max_overflow: int = 10,
     ) -> None:
         self.engine: AsyncEngine = create_async_engine(
             url=url,
